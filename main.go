@@ -37,7 +37,7 @@ func main() {
     })
 
     sm.HandleFunc("GET /admin/metrics", func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+        w.Header().Add("Content-Type", "text/html; charset=utf-8")
         w.WriteHeader(200)
         w.Write([]byte(fmt.Sprintf(`
 <html>
