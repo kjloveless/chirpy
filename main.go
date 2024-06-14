@@ -36,10 +36,16 @@ func main() {
         w.Write([]byte("OK"))
     })
 
-    sm.HandleFunc("GET /api/metrics", func(w http.ResponseWriter, r *http.Request) {
+    sm.HandleFunc("GET /admin/metrics", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Add("Content-Type", "text/plain; charset=utf-8")
         w.WriteHeader(200)
-        w.Write([]byte(fmt.Sprintf("Hits: %d", cfg.getFileserverHits())))
+        w.Write([]byte(fmt.Sprintf(`
+<html>
+    <body>
+        <h1>Welcome, Chirpy Admin</h1>
+        <p>Chirpy has been visited %d times!</p>
+    </body>
+</html>`, cfg.getFileserverHits())))
     })
 
     sm.HandleFunc("/api/reset", func(w http.ResponseWriter, r *http.Request) {
