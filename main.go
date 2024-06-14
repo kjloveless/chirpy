@@ -30,19 +30,19 @@ func main() {
     handler := http.StripPrefix("/app", http.FileServer(http.Dir(".")))
     sm.Handle("/app/*", cfg.middlewareMetricsInc(handler))
 
-    sm.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
+    sm.HandleFunc("GET /api/healthz", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Add("Content-Type", "text/plain; charset=utf-8")
         w.WriteHeader(200)
         w.Write([]byte("OK"))
     })
 
-    sm.HandleFunc("GET /metrics", func(w http.ResponseWriter, r *http.Request) {
+    sm.HandleFunc("GET /api/metrics", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Add("Content-Type", "text/plain; charset=utf-8")
         w.WriteHeader(200)
         w.Write([]byte(fmt.Sprintf("Hits: %d", cfg.getFileserverHits())))
     })
 
-    sm.HandleFunc("/reset", func(w http.ResponseWriter, r *http.Request) {
+    sm.HandleFunc("/api/reset", func(w http.ResponseWriter, r *http.Request) {
         w.Header().Add("Content-Type", "text/plain; charset=utf-8")
         w.WriteHeader(200)
         cfg.resetFileserverHits()
